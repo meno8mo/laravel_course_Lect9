@@ -1,0 +1,5 @@
+php artisan make:model Brand -m
+php artisan make:model Product -m
+php artisan make:model Product_image -m
+php storage:link
+
