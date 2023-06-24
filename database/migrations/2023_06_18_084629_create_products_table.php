@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->double('price',10,2);
             $table->foreignId('brand_id')
-                     ->constrained('brands','id');
+                     ->constrained('brands','id')->onDelete('set-null')->onUpdate('set-null');
             $table->timestamps();
         });
     }

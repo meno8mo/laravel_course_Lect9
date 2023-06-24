@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -45,7 +47,12 @@ Route::resource('categories',
     BrandController::class);
     Route::resource('products',
         ProductController::class);
-    route::get('/changelang/{lang}',function(string $locale)
+    Route::resource('roles',
+        RoleController::class);
+    Route::resource('users',
+        UserController::class);
+
+    Route::get('/changelang/{lang}',function(string $locale)
     {
         if(!in_array($locale,['en','ar']))
         {

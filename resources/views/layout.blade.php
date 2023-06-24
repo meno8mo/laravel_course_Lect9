@@ -71,7 +71,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
                     <a class="collapse-item" href="buttons.html">Buttons</a>
-                    <a class="collapse-item" href="{{url('carts')}}">Cards</a>
+
                 </div>
             </div>
         </li>
@@ -90,9 +90,12 @@
                     <a class="collapse-item" href="{{route('categories.index')}}">categories</a>
                     <a class="collapse-item" href="{{ route('brands.index') }}">brands</a>
                     <a class="collapse-item" href="{{ route('products.index') }}">products</a>
-                    <a class="collapse-item" href="utilities-other.html">Other</a>
-                </div>
+
+                            <a class="collapse-item" href="{{route('roles.index')}}">Roles</a>
+                            <a class="collapse-item" href="{{route('users.index')}}">Users</a>
+                        </div>
             </div>
+
         </li>
 
         <!-- Divider -->

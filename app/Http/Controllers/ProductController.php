@@ -38,22 +38,22 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        if ($request->id > 0)
-        $product = Product::findOrFail($request->id);
-        $bath = "";
-        if ($request->id > 0) {
-            $bath = $product->image;
-        }
-        if ($request->hasFile('image'))
+     //   if ($request->id > 0)
+//        $product = Product::findOrFail($request->id);
+//        $bath = "";
+//        if ($request->id > 0) {
+//            $bath = $product->image;
+//        }
+//        if ($request->hasFile('image'))
             $bath = $request->file('image')->store('products');
 
 
-        $product = Product::updateOrCreate(
-            [
-                'id' => $request->id,
-                'name' => $request->name
-            ]
-            , [
+        $product = Product::Create(
+//            [
+//                'id' => $request->id,
+//                'name' => $request->name
+//            ]
+             [
             'name' => $request->name,
             'description' => $request->description,
             'image' => $bath,
@@ -62,11 +62,13 @@ class ProductController extends Controller
             'status' => isset($request->status)
         ]);
 
-        $product->categories()->sync($request->categories);
-        if ($request->id > 0)
+//        $product->categories()->sync($request->categories);
+//        if ($request->id > 0) {
             toastr()->success('تم الاضافة بنجاح');
-        else
-            toastr()->success('تم التعديل بنجاح');
+//        }
+//        else
+//            toastr()->success('تم التعديل بنجاح');
+
         return redirect(route('products.index'));
     }
 
@@ -85,7 +87,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('products.create')
+        return view('products.edit')
             ->with('categories', $categories)
             ->with('brands', $brands)
             ->with('product', $product);
@@ -97,6 +99,26 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         //
+        $bath=$product->image;
+        if($request->hasFile('image'))
+        {
+            $bath=$request->file('image')->store('brands');
+            Storage::delete($product->image);
+
+        }
+        $product->update(
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+                'image' => $bath,
+                'brand_id' => $request->brand_id,
+                'price' => $request->price,
+                'status' => isset($request->status)
+
+            ]
+        );
+        toastr()->success('تم  بنجاح');
+        return redirect(route('products.index'));
     }
 
     /**
