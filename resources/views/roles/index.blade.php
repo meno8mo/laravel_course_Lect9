@@ -4,7 +4,9 @@
 @section('content')
     <div class="container-fluid bg-white">
         <h1> roles</h1>
+        @can('create-roles')
         <a href="{{route('roles.create')}}" class="btn btn-primary mb-5 float-right"> create</a>
+        @endcan
         <table class="table table-striped">
             <thead>
             <tr>
@@ -28,12 +30,15 @@
 									<span class="fas fa-search "></span> عرض
 								</span>
                         </a>
+                        @can('update-roles')
 
                         <a href="{{route('roles.edit',$role)}}">
 								<span class="btn  btn-outline-success btn-sm font-1 mx-1">
 									<span class="fas fa-wrench "></span> تحكم
 								</span>
                         </a>
+                        @endcan
+                        @can('delete-roles')
 
                         <form method="POST" action="{{route('roles.destroy',$role)}}"
                               class="d-inline-block">@csrf @method("DELETE")
@@ -42,7 +47,7 @@
                                 <span class="fas fa-trash "></span> حذف
                             </button>
                         </form>
-
+                        @endcan
                     </td>
                 </tr>
             @endforeach

@@ -4,9 +4,10 @@
 
     <div class="container-fluid bg-white">
         <h1> products</h1>
+        @can('create-products')
 
         <a href="{{route('products.create')}}" class="btn btn-primary mb-5 float-right"> create</a>
-
+        @endcan
         <table class="table table-striped">
             <thead>
             <tr>
@@ -41,12 +42,17 @@
                     <td>{{$product->description}}</td>
                     <td>{{$product->status}}</td>
                     <td style="width: 180px;">
+                        @can('update-products')
+
                         <a href="{{route('products.edit',$product)}}">
 							<span class="btn  btn-outline-success btn-sm font-1 mx-1">
 								<span class="fas fa-wrench "></span> تحكم
 							</span>
                         </a>
-                        <form method="POST" action="{{route('products.destroy',$product)}}"
+                        @endcan
+                            @can('delete-products')
+
+                            <form method="POST" action="{{route('products.destroy',$product)}}"
                               class="d-inline-block">
                             @csrf
                             @method("DELETE")
@@ -56,6 +62,7 @@
                                 <span class="fas fa-trash "></span> حذف
                             </button>
                         </form>
+                            @endcan
 
 
                     </td>

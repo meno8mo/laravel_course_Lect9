@@ -4,9 +4,9 @@
 
     <div class="container-fluid">
         <h1> categories</h1>
-
+        @can('create-categories')
         <a href="{{route('categories.create')}}" class="btn btn-primary mb-5 float-right"> create</a>
-
+        @endcan
         <table class="table table-striped">
             <thead>
             <tr>
@@ -30,13 +30,17 @@
 
 
                     <td style="width: 180px;">
+                        @can('update-categories')
                         <a href="{{route('categories.edit',$category)}}">
 							<span class="btn  btn-outline-success btn-sm font-1 mx-1">
 								<span class="fas fa-wrench "></span> تحكم
 							</span>
                         </a>
+                        @endcan
+                            @can('delete-categories')
 
-                        <form method="POST" action="{{route('categories.destroy',$category)}}"
+
+                            <form method="POST" action="{{route('categories.destroy',$category)}}"
                               class="d-inline-block">
                             @csrf
                             @method("DELETE")
@@ -46,7 +50,7 @@
                                 <span class="fas fa-trash "></span> حذف
                             </button>
                         </form>
-
+                            @endcan
 
                     </td>
 
