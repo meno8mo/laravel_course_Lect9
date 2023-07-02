@@ -12,6 +12,15 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+//        $this->middleware(['role:admin','permission:access-brands|edit articles']);
+
+        $this->middleware('permission:access-categories', ['only' => ['index','show']]);
+        $this->middleware('permission:create-categories', ['only' => ['create','store']]);
+        $this->middleware('permission:update-categories', ['only' => ['edit','store']]);
+        $this->middleware('permission:delete-categories', ['only' => ['destroy']]);
+    }
     public function index()
     {
      $categories=Category::paginate(20);

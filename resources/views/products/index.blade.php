@@ -28,12 +28,11 @@
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
                     <td><img  width="50" src="{{url('storage/'.$product->image)}}"></td>
-                    {{--                    <td>{{($product->brand==null)?"": $product->brand->name}}</td>--}}
                     <td>{{ $product->brand?->name??"not Found"}}</td>
                     <td>
                         <div class="d-flex justify-content-between">
                             @foreach($product->categories as $category)
-                                <span class="mx-1">{{$category->name}}</span>
+                                <span class="mx-1">{{$category?->name}}</span>
                             @endforeach
                         </div>
 

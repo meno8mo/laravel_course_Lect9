@@ -11,11 +11,22 @@ use Illuminate\Http\Request;
 //use Illuminate\Support\Facades;
 use Illuminate\Support\Facades\Storage;
 
+
 class BrandController extends Controller
 {
     /**
+     *
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+//        $this->middleware(['role:admin','permission:access-brands|edit articles']);
+
+        $this->middleware('permission:access-brands', ['only' => ['index','show']]);
+        $this->middleware('permission:create-brands', ['only' => ['create','store']]);
+        $this->middleware('permission:update-brands', ['only' => ['edit','store']]);
+        $this->middleware('permission:delete-brands', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $brands=Brand::paginate(10);
