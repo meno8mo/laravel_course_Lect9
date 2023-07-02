@@ -69,8 +69,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" href="buttons.html">Buttons</a>
+                    <h6 class="collapse-header">Auth:</h6>
+                    <a class="collapse-item" href="{{route('roles.index')}}">Roles</a>
+                    <a class="collapse-item" href="{{route('users.index')}}">Users</a>
 
                 </div>
             </div>
@@ -87,12 +88,17 @@
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Utilities:</h6>
+                    @can('access-categories')
                     <a class="collapse-item" href="{{route('categories.index')}}">categories</a>
+                    @endcan
+                    @can('access-brands')
                     <a class="collapse-item" href="{{ route('brands.index') }}">brands</a>
+                    @endcan
+                        @can('access-products')
                     <a class="collapse-item" href="{{ route('products.index') }}">products</a>
+                    @endcan
 
-                            <a class="collapse-item" href="{{route('roles.index')}}">Roles</a>
-                            <a class="collapse-item" href="{{route('users.index')}}">Users</a>
+
                         </div>
             </div>
 
