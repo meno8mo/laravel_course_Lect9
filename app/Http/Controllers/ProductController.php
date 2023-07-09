@@ -23,10 +23,37 @@ class ProductController extends Controller
         $this->middleware('permission:update-products', ['only' => ['edit','store']]);
         $this->middleware('permission:delete-products', ['only' => ['destroy']]);
     }
+    public function restore($id)
+    {
+        Product::onlyTrashed()->
+            where('id',$id)->restore();
+        toastr()->success('تم  بنجاح');
+        return redirect(route('products.index'));
+    }
+    public function forceDelete($id)
+    {
+        Product::onlyTrashed()->
+        where('id',$id)->forceDelete();
+        toastr()->success('تم  بنجاح');
+        return redirect(route('products.trashed'));
+    }
+   public function deleted_index()
+    {
+        $products = Product::onlyTrashed()->paginate(5);
+        return view('products.index')
+            ->with('deleted',1)
+            ->with('products', $products)
+         ;
+
+}
+
     public function index()
     {
+//        $not=auth()->user()->notifications;
+//        return dd($not);
         $products = Product::paginate(25);
         return view('products.index')
+            ->with('deleted',0)
             ->with('products', $products);
     }
 
@@ -68,7 +95,9 @@ class ProductController extends Controller
             'image' => $bath,
             'brand_id' => $request->brand_id,
             'price' => $request->price,
-            'status' => isset($request->status)
+            'status' => isset($request->status),
+         //  'deleted_by' => $request?->deleted_by,
+
         ]);
 
 //        $product->categories()->sync($request->categories);
@@ -136,7 +165,11 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         Storage::delete($product->image);
+
         $product->delete();
+        $product->deleted_by=auth()->id();
+        $product->save();
+
 
         toastr()->success('تم الحذف بنجاح');
         return redirect(route('products.index'));

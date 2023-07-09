@@ -43,14 +43,14 @@
 
                     <td>{{$user->status}}</td>
                     <td style="width: 180px;">
-                        @can('update-users')
+{{--                        @can('update-users')--}}
 
                         <a href="{{route('users.edit',$user)}}">
 							<span class="btn  btn-outline-success btn-sm font-1 mx-1">
 								<span class="fas fa-wrench "></span> تحكم
 							</span>
                         </a>
-                        @endcan
+{{--                        @endcan--}}
                             @can('delete-users')
 
                             <form method="POST" action="{{route('users.destroy',$user)}}"

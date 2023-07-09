@@ -19,6 +19,10 @@
                 <th>Price</th>
                 <th>Description</th>
                 <th>status</th>
+                @if($deleted)
+                    <th>deleted_at</th>
+                    <th>deleted_by</th>
+                @endif
                 <th>actions</th>
             </tr>
             </thead>
@@ -39,19 +43,24 @@
                     </td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->description}}</td>
+                    @if($deleted)
+                        <td>{{$product->Userwho_delete?->name}}</td>
+                        <td>{{$product->deleted_at}}</td>
+                    @endif
                     <td>{{$product->status}}</td>
                     <td style="width: 180px;">
-                        @can('update-products')
 
-                        <a href="{{route('products.edit',$product)}}">
+{{--                        @can('update-products')--}}
+                            @if($deleted)
+                        <a href="{{route('products.restore',$product->id)}}">
 							<span class="btn  btn-outline-success btn-sm font-1 mx-1">
-								<span class="fas fa-wrench "></span> تحكم
+								<span class="fas fa-wrench "></span> restore
 							</span>
                         </a>
-                        @endcan
-                            @can('delete-products')
+{{--                        @endcan--}}
+{{--                            @can('delete-products')--}}
 
-                            <form method="POST" action="{{route('products.destroy',$product)}}"
+                            <form method="POST" action="{{route('products.forceDelete',$product->id)}}"
                               class="d-inline-block">
                             @csrf
                             @method("DELETE")
@@ -61,7 +70,28 @@
                                 <span class="fas fa-trash "></span> حذف
                             </button>
                         </form>
-                            @endcan
+    @endif
+                                @if(!$deleted)
+                                    <a href="{{route('products.edit',$product)}}">
+							<span class="btn  btn-outline-success btn-sm font-1 mx-1">
+								<span class="fas fa-wrench "></span> edit
+							</span>
+                                    </a>
+{{--                                @endcan--}}
+{{--                                @can('delete-products')--}}
+
+                                    <form method="POST" action="{{route('products.destroy',$product)}}"
+                                          class="d-inline-block">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button class="btn  btn-outline-danger btn-sm font-1 mx-1"
+                                                onclick="var result = confirm('هل أنت متأكد من عملية الحذف ؟');
+                         if(result){}else{event.preventDefault()}">
+                                            <span class="fas fa-trash "></span> حذف
+                                        </button>
+                                    </form>
+                                @endif
+{{--                            @endcan--}}
 
 
                     </td>

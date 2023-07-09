@@ -45,6 +45,13 @@ Route::resource('categories',
 
     Route::resource('brands',
     BrandController::class);
+    Route::get('products/trashed',
+        [ProductController::class,'deleted_index'])->name('products.trashed');
+
+    Route::get('products/restore/{id}',
+        [ProductController::class,'restore'])->name('products.restore');
+    Route::delete('products/forceDelete/{id}',
+        [ProductController::class,'forceDelete'])->name('products.forceDelete');
     Route::resource('products',
         ProductController::class);
     Route::resource('roles',

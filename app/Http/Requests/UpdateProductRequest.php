@@ -23,6 +23,13 @@ class UpdateProductRequest extends FormRequest
     {
 
         return [
+            'name' => 'required|max:255',
+            'description' => 'nullable',
+            'price'=>'required|numeric',
+            'categories' => "required|array",
+            'categories.*' => "required|exists:categories,id",
+            'brand_id'=>'required|numeric|exists:brands,id',
+            "image"=>[request()->id>0?"nullable":"required","image","max:51120"]
             //
         ];
     }

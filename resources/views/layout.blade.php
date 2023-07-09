@@ -96,6 +96,8 @@
                     @endcan
                         @can('access-products')
                     <a class="collapse-item" href="{{ route('products.index') }}">products</a>
+                        <a class="collapse-item" href="{{ route('products.trashed') }}">deleted_products</a>
+
                     @endcan
 
 
