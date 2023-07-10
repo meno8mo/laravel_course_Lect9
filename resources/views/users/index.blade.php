@@ -6,6 +6,13 @@
         <h1> users</h1>
         @can('create-users')
         <a href="{{route('users.create')}}" class="btn btn-primary mb-5 float-right"> create</a>
+
+
+            <a href="{{route('users.export')}}" class="btn btn-info mb-9 float-right">    export to excel</a>
+            <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#exampleModal">
+                import
+            </button>
+
         @endcan
         <table class="table table-striped">
             <thead>
@@ -73,6 +80,47 @@
         </table>
         <div class="col-12 p-3">
             {!! $users->render() !!}
+        </div>
+    </div>
+
+    <!-- Model -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="mx-5" method="post"
+                      enctype="multipart/form-data"
+                      action="{{route('users.import')}}">
+                    @csrf
+                    <div class="modal-body">
+
+
+                        <div class="form-group">
+                            <label for="image">Excel File</label>
+                            <input type="file" required value="{{old('file')}}"
+                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                   name="file" class="form-control @error('file') is-invalid @enderror"
+                                   id="image">
+                            @error('file')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">import</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

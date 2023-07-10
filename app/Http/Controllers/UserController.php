@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -13,6 +15,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 //use App\Http\Controllers\Hash;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -23,6 +26,25 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function export()
+    {
+//        return Excel::download((new UsersExport)->forstatus(1)-> forYear(2023), 'users.xlsx');
+        return Excel::download((new UsersExport)->forstatus(1)-> forYear(2023), 'users.html');
+    }
+    public function import(Request $request)
+    {
+        $path = '';
+        if ($request->hasFile('file'))
+            $path = $request->file('file')->store('imports');
+        if ($path != "") {
+            try {
+                Excel::import(new UsersImport, 'storage/' . $path);
+                toastr()->success('تم الاستيراد  بنجاح');
+            } catch (Exception $ex) {
+                toastr()->error($ex->getMessage());
+            }
+
+        }}
     public function index()
     {
         //

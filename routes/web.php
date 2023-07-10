@@ -56,6 +56,9 @@ Route::resource('categories',
         ProductController::class);
     Route::resource('roles',
         RoleController::class);
+    Route::get('users/export/', [UserController::class, 'export'])->name('users.export');
+    Route::post('users/import/', [UserController::class, 'import'])->name('users.import');
+
     Route::resource('users',
         UserController::class);
 
