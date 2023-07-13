@@ -25,6 +25,12 @@ use App\Models\Product;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/sendEmail', function () {
+    \Illuminate\Support\Facades\Mail::to('menamohammed77517@gmail.com')
+        ->send(new \App\Mail\TestEmail(['title' => "test change data"]));
+
+    return '<h1>Email  Sened</h1>';
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
