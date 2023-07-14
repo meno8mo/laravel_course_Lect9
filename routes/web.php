@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomNotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -67,6 +68,13 @@ Route::resource('categories',
 
     Route::resource('users',
         UserController::class);
+    Route::get('fcm_token', [CustomNotificationController::class, 'fcm_token'])
+        ->name('fcm_token');
+    Route::get('resend/custom-notifications/{id}',
+        [CustomNotificationController::class, 'resend'])
+        ->name('custom-notifications.resend');
+    Route::resource('custom-notifications', CustomNotificationController::class);
+
 
     Route::get('/changelang/{lang}',function(string $locale)
     {

@@ -72,6 +72,8 @@
                     <h6 class="collapse-header">Auth:</h6>
                     <a class="collapse-item" href="{{route('roles.index')}}">Roles</a>
                     <a class="collapse-item" href="{{route('users.index')}}">Users</a>
+                    <a class="collapse-item" href="{{route('custom-notifications.index')}}">custom notifications</a>
+
 
                 </div>
             </div>
@@ -265,7 +267,12 @@
 <!-- Page level custom scripts -->
 <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>
-
+@include('shared.fcm')
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>
 </body>
 
 </html>
